@@ -2,7 +2,6 @@
 // Indépendant de l'application : aucune donnée de l'app ici, aucune donnée d'ici dans l'app.
 const ALLOWED_ORIGINS = ['https://hellosillage.app', 'https://www.hellosillage.app'];
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const GMAIL_RE = /^[^\s@]+@(gmail|googlemail)\.com$/i;
 const PER_IP = 5; // inscriptions par heure et par adresse IP
 const GLOBAL_MAX = 300; // inscriptions par heure au total
 const HOUR = 3600;
@@ -54,9 +53,6 @@ export default {
     if (email.length > 254 || !EMAIL_RE.test(email)) return reply(request, 422, { ok: false });
     const lang = body.lang === 'fr' || body.lang === 'en' ? body.lang : null;
     const platform = body.platform === 'android' || body.platform === 'ios' ? body.platform : null;
-    let gmail = typeof body.gmail === 'string' ? body.gmail.trim() : '';
-    if (gmail && (gmail.length > 254 || !GMAIL_RE.test(gmail))) return reply(request, 422, { ok: false });
-    gmail = gmail || null;
 
     try {
       const now = Math.floor(Date.now() / 1000);
@@ -69,9 +65,9 @@ export default {
       await env.DB.batch([
         env.DB.prepare('INSERT INTO hits (ip_hash, ts) VALUES (?, ?)').bind(ipHash, now),
         // même réponse que l'adresse soit nouvelle ou déjà inscrite : on ne révèle pas qui est dans la liste
-        // si l'adresse est déjà inscrite, on complète ses informations (plateforme, Gmail) sans rien révéler
-        env.DB.prepare('UPDATE waitlist SET platform = COALESCE(?, platform), gmail = COALESCE(?, gmail) WHERE lower(email) = lower(?)').bind(platform, gmail, email),
-        env.DB.prepare('INSERT OR IGNORE INTO waitlist (email, lang, platform, gmail) VALUES (?, ?, ?, ?)').bind(email, lang, platform, gmail),
+        // si l'adresse est déjà inscrite, on met à jour sa plateforme sans rien révéler
+        env.DB.prepare('UPDATE waitlist SET platform = COALESCE(?, platform) WHERE lower(email) = lower(?)').bind(platform, email),
+        env.DB.prepare('INSERT OR IGNORE INTO waitlist (email, lang, platform) VALUES (?, ?, ?)').bind(email, lang, platform),
       ]);
     } catch (e) {
       console.log('waitlist: échec d\'enregistrement', String(e));

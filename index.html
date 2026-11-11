@@ -1,139 +1,281 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sillage</title>
-<meta name="description" content="Reveal the world by exploring it. Every step clears the fog on your map.">
-<meta name="theme-color" content="#000000">
-<style>
-:root{--bg:#000;--fg:#f2f2f2;--mut:#8a8a8a;--line:#2a2a2a;--green:#2ecc71;--err:#ff6b6b}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;min-height:100dvh;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 16px;text-align:center}
-main{width:100%;max-width:560px}
-.logo{display:block;margin:0 auto 28px;width:96px;height:96px;border-radius:22px;object-fit:cover}
-.word{font-size:15px;letter-spacing:.42em;text-transform:uppercase;color:var(--mut);margin:0 0 18px;padding-left:.42em}
-h1{font-size:clamp(21px,5vw,30px);line-height:1.25;font-weight:700;margin:0 0 28px;letter-spacing:-.01em}
-/* Espace vidéo : invisible tant que demo.mp4 n'existe pas */
-.demo{display:block;margin:0 auto 28px;width:auto;max-width:100%;max-height:52vh;border-radius:18px;background:#0e0e0e}
-form{display:flex;flex-direction:column;gap:10px;max-width:440px;margin:0 auto;text-align:left}
-.choice{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.choice button{height:48px;border-radius:12px;border:1px solid var(--line);background:#0e0e0e;color:var(--fg);font-size:16px;font-weight:600;cursor:pointer}
-.choice button[aria-pressed=true]{border-color:var(--green);background:#0b2417;color:var(--green)}
-input[type=email]{width:100%;height:50px;border-radius:12px;border:1px solid var(--line);background:#0e0e0e;color:var(--fg);padding:0 14px;font-size:16px}
-input[type=email]:focus,.choice button:focus-visible{outline:2px solid var(--green);outline-offset:1px}
-label.small{display:block;font-size:13px;color:var(--mut);margin:2px 0 6px}
-.submit{height:50px;border-radius:12px;border:0;background:var(--green);color:#04210f;font-weight:700;font-size:16px;cursor:pointer;margin-top:4px}
-.submit:disabled{opacity:.6;cursor:default}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.msg{min-height:24px;margin:14px 0 0;font-size:15px}
-.ok{color:var(--green)}.bad{color:var(--err)}
-.note{font-size:12px;color:var(--mut);margin:6px 0 0}
-a{color:var(--mut)}
-footer{margin-top:40px;font-size:12px;color:var(--mut)}
-[hidden]{display:none!important}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sillage</title>
+  <meta name="description" content="Reveal the world by exploring it. Every step clears the fog on your map.">
+  <meta name="theme-color" content="#000000">
+  <style>
+    :root {
+      --bg: #000;
+      --fg: #f2f2f2;
+      --mut: #8a8a8a;
+      --line: #2a2a2a;
+      --green: #2ecc71;
+      --err: #ff6b6b
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: var(--bg);
+      color: var(--fg);
+      font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+      text-align: center
+    }
+
+    main {
+      width: 100%;
+      max-width: 560px
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 28px;
+      width: 96px;
+      height: 96px;
+      border-radius: 22px;
+      object-fit: cover
+    }
+
+    .word {
+      font-size: 15px;
+      letter-spacing: .42em;
+      text-transform: uppercase;
+      color: var(--mut);
+      margin: 0 0 18px;
+      padding-left: .42em
+    }
+
+    h1 {
+      font-size: clamp(21px, 5vw, 30px);
+      line-height: 1.25;
+      font-weight: 700;
+      margin: 0 0 28px;
+      letter-spacing: -.01em
+    }
+
+    /* Espace vidéo : invisible tant que demo.mp4 n'existe pas */
+    .demo {
+      display: block;
+      margin: 0 auto 28px;
+      width: auto;
+      max-width: 100%;
+      max-height: 52vh;
+      border-radius: 18px;
+      background: #0e0e0e
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 440px;
+      margin: 0 auto;
+      text-align: left
+    }
+
+    .choice {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px
+    }
+
+    .choice button {
+      height: 48px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #0e0e0e;
+      color: var(--fg);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer
+    }
+
+    .choice button[aria-pressed=true] {
+      border-color: var(--green);
+      background: #0b2417;
+      color: var(--green)
+    }
+
+    input[type=email] {
+      width: 100%;
+      height: 50px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #0e0e0e;
+      color: var(--fg);
+      padding: 0 14px;
+      font-size: 16px
+    }
+
+    input[type=email]:focus,
+    .choice button:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 1px
+    }
+
+    .submit {
+      height: 50px;
+      border-radius: 12px;
+      border: 0;
+      background: var(--green);
+      color: #04210f;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 4px
+    }
+
+    .submit:disabled {
+      opacity: .6;
+      cursor: default
+    }
+
+    .hp {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden
+    }
+
+    .msg {
+      min-height: 24px;
+      margin: 14px 0 0;
+      font-size: 15px
+    }
+
+    .ok {
+      color: var(--green)
+    }
+
+    .bad {
+      color: var(--err)
+    }
+
+    .note {
+      font-size: 12px;
+      color: var(--mut);
+      margin: 6px 0 0
+    }
+
+    a {
+      color: var(--mut)
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 12px;
+      color: var(--mut)
+    }
+
+    [hidden] {
+      display: none !important
+    }
+  </style>
 </head>
+
 <body>
-<main>
-  <img class="logo" id="logo" src="logo.png" alt="Sillage" hidden>
-  <p class="word" id="word">Sillage</p>
-  <h1 id="tagline"></h1>
+  <main>
+    <img class="logo" id="logo" src="logo.png" alt="Sillage" hidden>
+    <p class="word" id="word">Sillage</p>
+    <h1 id="tagline"></h1>
 
-  <video class="demo" id="demo" muted loop autoplay playsinline preload="metadata" poster="demo-poster.jpg" hidden>
-    <source src="demo.mp4" type="video/mp4">
-  </video>
+    <video class="demo" id="demo" muted loop autoplay playsinline preload="metadata" poster="demo-poster.jpg" hidden>
+      <source src="demo.mp4" type="video/mp4">
+    </video>
 
-  <form id="f" novalidate>
-    <div class="choice" role="group" id="plat" aria-label="Platform">
-      <button type="button" data-p="android" aria-pressed="false">Android</button>
-      <button type="button" data-p="ios" aria-pressed="false">iPhone</button>
-    </div>
-    <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required>
-    <div id="gwrap" hidden>
-      <label class="small" for="gmail" id="glabel"></label>
-      <input type="email" id="gmail" name="gmail" autocomplete="off" inputmode="email">
-    </div>
-    <div class="hp" aria-hidden="true"><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
-    <button type="submit" class="submit" id="btn"></button>
-  </form>
-  <p class="msg" id="msg" role="status" aria-live="polite"></p>
-  <p class="note" id="note"></p>
-</main>
-<footer><a id="priv" href="privacy.html"></a></footer>
-<script>
-// Adresse du service qui enregistre les e-mails (Cloudflare, indépendant de l'application).
-var ENDPOINT = "https://sillage-waitlist.sillagetest84.workers.dev/";
-var T = {
-  en: {tag: "Reveal the world by exploring it.<br>Every step clears the fog on your map.", ph: "Your email", btn: "Join the beta", ok: "Thanks! We'll email you when the beta opens.", bad: "Please enter a valid email address.", badg: "Please enter a valid Gmail address.", plat: "Please choose Android or iPhone.", net: "Something went wrong. Please try again later.", many: "Too many attempts. Please try again later.", note: "One email at launch. No spam.", priv: "Privacy",
-        glabel: "Gmail address for the Android test (Google requires it)", gph: "you@gmail.com", ios: "The beta starts on Android. We'll let you know as soon as an iPhone version is ready."},
-  fr: {tag: "Révèle le monde en l'explorant.<br>Chaque pas efface le brouillard de ta carte.", ph: "Ton e-mail", btn: "Rejoindre la bêta", ok: "Merci ! On t'écrit à l'ouverture de la bêta.", bad: "Entre une adresse e-mail valide.", badg: "Entre une adresse Gmail valide.", plat: "Choisis Android ou iPhone.", net: "Une erreur est survenue. Réessaie plus tard.", many: "Trop de tentatives. Réessaie plus tard.", note: "Un seul e-mail au lancement. Pas de spam.", priv: "Confidentialité",
-        glabel: "Adresse Gmail pour le test Android (Google l'exige)", gph: "toi@gmail.com", ios: "La bêta démarre sur Android. On te prévient dès qu'une version iPhone est prête."}
-};
-var lang = (navigator.language || "en").toLowerCase().indexOf("fr") === 0 ? "fr" : "en";
-var t = T[lang];
-var $ = function (id) { return document.getElementById(id); };
-document.documentElement.lang = lang;
-$("tagline").innerHTML = t.tag;
-$("email").placeholder = t.ph;
-$("btn").textContent = t.btn;
-$("note").textContent = t.note;
-$("priv").textContent = t.priv;
-$("glabel").textContent = t.glabel;
-$("gmail").placeholder = t.gph;
+    <form id="f" novalidate>
+      <div class="choice" role="group" id="plat" aria-label="Platform">
+        <button type="button" data-p="android" aria-pressed="false">Android</button>
+        <button type="button" data-p="ios" aria-pressed="false">iPhone</button>
+      </div>
+      <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required>
+      <div class="hp" aria-hidden="true"><input type="text" id="website" name="website" tabindex="-1"
+          autocomplete="off"></div>
+      <button type="submit" class="submit" id="btn"></button>
+    </form>
+    <p class="msg" id="msg" role="status" aria-live="polite"></p>
+    <p class="note" id="note"></p>
+  </main>
+  <footer><a id="priv" href="privacy.html"></a></footer>
+  <script>
+    // Adresse du service qui enregistre les e-mails (Cloudflare, indépendant de l'application).
+    var ENDPOINT = "https://sillage-waitlist.sillagetest84.workers.dev/";
+    var T = {
+      en: {
+        tag: "Reveal the world by exploring it.<br>Every step clears the fog on your map.", ph: "Your email (Gmail for the beta)", btn: "Join the beta", ok: "Thanks! We'll email you when the beta opens.", bad: "Please enter a valid email address.", plat: "Please choose Android or iPhone.", net: "Something went wrong. Please try again later.", many: "Too many attempts. Please try again later.", note: "One email at launch. No spam.", priv: "Privacy",
+        ios: "The beta starts on Android. We'll let you know as soon as an iPhone version is ready."
+      },
+      fr: {
+        tag: "Révèle le monde en l'explorant.<br>Chaque pas efface le brouillard de ta carte.", ph: "Ton e-mail (Gmail pour la beta)", btn: "Rejoindre la bêta", ok: "Merci ! On t'écrit à l'ouverture de la bêta.", bad: "Entre une adresse e-mail valide.", plat: "Choisis Android ou iPhone.", net: "Une erreur est survenue. Réessaie plus tard.", many: "Trop de tentatives. Réessaie plus tard.", note: "Un seul e-mail au lancement. Pas de spam.", priv: "Confidentialité",
+        ios: "La bêta démarre sur Android. On te prévient dès qu'une version iPhone est prête."
+      }
+    };
+    var lang = (navigator.language || "en").toLowerCase().indexOf("fr") === 0 ? "fr" : "en";
+    var t = T[lang];
+    var $ = function (id) { return document.getElementById(id); };
+    document.documentElement.lang = lang;
+    $("tagline").innerHTML = t.tag;
+    $("email").placeholder = t.ph;
+    $("btn").textContent = t.btn;
+    $("note").textContent = t.note;
+    $("priv").textContent = t.priv;
 
-// Logo : si logo.png existe à côté de cette page, il remplace le mot « Sillage ».
-var img = $("logo");
-img.onload = function () { img.hidden = false; $("word").hidden = true; };
-img.onerror = function () { img.remove(); };
-if (img.complete && img.naturalWidth) img.onload();
+    // Logo : si logo.png existe à côté de cette page, il remplace le mot « Sillage ».
+    var img = $("logo");
+    img.onload = function () { img.hidden = false; $("word").hidden = true; };
+    img.onerror = function () { img.remove(); };
+    if (img.complete && img.naturalWidth) img.onload();
 
-// Vidéo : n'apparaît que si demo.mp4 existe.
-var demo = $("demo");
-demo.addEventListener("loadedmetadata", function () { demo.hidden = false; var p = demo.play(); if (p && p.catch) p.catch(function () {}); });
-demo.addEventListener("error", function () { demo.remove(); }, true);
+    // Vidéo : n'apparaît que si demo.mp4 existe.
+    var demo = $("demo");
+    demo.addEventListener("loadedmetadata", function () { demo.hidden = false; var p = demo.play(); if (p && p.catch) p.catch(function () { }); });
+    demo.addEventListener("error", function () { demo.remove(); }, true);
 
-var platform = null;
-var GMAIL_RE = /^[^\s@]+@(gmail|googlemail)\.com$/i;
-var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-function say(text, cls) { $("msg").textContent = text; $("msg").className = "msg " + cls; }
-function refreshGmail() {
-  var isGmail = GMAIL_RE.test($("email").value.trim());
-  $("gwrap").hidden = !(platform === "android" && !isGmail);
-}
-document.querySelectorAll("#plat button").forEach(function (b) {
-  b.addEventListener("click", function () {
-    platform = b.getAttribute("data-p");
-    document.querySelectorAll("#plat button").forEach(function (o) { o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
-    refreshGmail();
-    say(platform === "ios" ? t.ios : "", platform === "ios" ? "ok" : "");
-  });
-});
-$("email").addEventListener("input", refreshGmail);
+    var platform = null;
+    var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    function say(text, cls) { $("msg").textContent = text; $("msg").className = "msg " + cls; }
+    document.querySelectorAll("#plat button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        platform = b.getAttribute("data-p");
+        document.querySelectorAll("#plat button").forEach(function (o) { o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
+        say(platform === "ios" ? t.ios : "", platform === "ios" ? "ok" : "");
+      });
+    });
 
-$("f").addEventListener("submit", function (e) {
-  e.preventDefault();
-  var email = $("email").value.trim(), gmail = $("gmail").value.trim();
-  if (!platform) return say(t.plat, "bad");
-  if (!EMAIL_RE.test(email)) return say(t.bad, "bad");
-  if (platform === "android") {
-    if (GMAIL_RE.test(email)) gmail = email;
-    else if (!GMAIL_RE.test(gmail)) return say(t.badg, "bad");
-  } else gmail = "";
-  $("btn").disabled = true; say("", "");
-  fetch(ENDPOINT, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({email: email, lang: lang, platform: platform, gmail: gmail, website: $("website").value})
-  }).then(function (r) {
-    if (r.status === 429) return say(t.many, "bad");
-    if (r.status === 422) return say(t.bad, "bad");
-    if (!r.ok) throw new Error("http " + r.status);
-    say(t.ok, "ok"); $("f").reset(); platform = null;
-    document.querySelectorAll("#plat button").forEach(function (o) { o.setAttribute("aria-pressed", "false"); });
-    refreshGmail();
-  }).catch(function () { say(t.net, "bad"); }).then(function () { $("btn").disabled = false; });
-});
-</script>
+    $("f").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = $("email").value.trim();
+      if (!platform) return say(t.plat, "bad");
+      if (!EMAIL_RE.test(email)) return say(t.bad, "bad");
+      $("btn").disabled = true; say("", "");
+      fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email, lang: lang, platform: platform, website: $("website").value })
+      }).then(function (r) {
+        if (r.status === 429) return say(t.many, "bad");
+        if (r.status === 422) return say(t.bad, "bad");
+        if (!r.ok) throw new Error("http " + r.status);
+        say(t.ok, "ok"); $("f").reset(); platform = null;
+        document.querySelectorAll("#plat button").forEach(function (o) { o.setAttribute("aria-pressed", "false"); });
+      }).catch(function () { say(t.net, "bad"); }).then(function () { $("btn").disabled = false; });
+    });
+  </script>
 </body>
+
 </html>
