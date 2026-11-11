@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sillage</title>
+<meta name="description" content="Reveal the world by exploring it. Every step clears the fog on your map.">
+<meta name="theme-color" content="#000000">
+<style>
+:root{--bg:#000;--fg:#f2f2f2;--mut:#8a8a8a;--line:#2a2a2a;--green:#2ecc71;--err:#ff6b6b}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px;text-align:center}
+main{width:100%;max-width:560px}
+.logo{display:block;margin:0 auto 28px;width:96px;height:96px;border-radius:22px;object-fit:cover}
+.word{font-size:15px;letter-spacing:.42em;text-transform:uppercase;color:var(--mut);margin:0 0 18px;padding-left:.42em}
+h1{font-size:clamp(21px,5vw,30px);line-height:1.25;font-weight:700;margin:0 0 30px;letter-spacing:-.01em}
+form{display:flex;gap:8px;max-width:440px;margin:0 auto}
+input[type=email]{flex:1;min-width:0;height:50px;border-radius:12px;border:1px solid var(--line);background:#0e0e0e;color:var(--fg);padding:0 14px;font-size:16px}
+input[type=email]:focus{outline:2px solid var(--green);outline-offset:1px;border-color:transparent}
+button{height:50px;border-radius:12px;border:0;background:var(--green);color:#04210f;font-weight:700;font-size:16px;padding:0 20px;cursor:pointer}
+button:disabled{opacity:.6;cursor:default}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.msg{min-height:24px;margin:14px 0 0;font-size:15px}
+.ok{color:var(--green)}.bad{color:var(--err)}
+.note{font-size:12px;color:var(--mut);margin:6px 0 0}
+a{color:var(--mut)}
+footer{margin-top:44px;font-size:12px;color:var(--mut)}
+@media (max-width:420px){form{flex-direction:column}input[type=email]{flex:none;width:100%}button{width:100%}}
+</style>
+</head>
+<body>
+<main>
+  <img class="logo" id="logo" src="logo.png" alt="Sillage" hidden>
+  <p class="word" id="word">Sillage</p>
+  <h1 id="tagline"></h1>
+  <form id="f" novalidate>
+    <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required>
+    <div class="hp" aria-hidden="true"><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
+    <button type="submit" id="btn"></button>
+  </form>
+  <p class="msg" id="msg" role="status" aria-live="polite"></p>
+  <p class="note" id="note"></p>
+</main>
+<footer><a id="priv" href="privacy.html"></a></footer>
+<script>
+// Adresse du service qui enregistre les e-mails (Cloudflare, indépendant de l'application).
+var ENDPOINT = "https://sillage-waitlist.sillagetest84.workers.dev/";
+var T = {
+  en: {tag: "Reveal the world by exploring it.<br>Every step clears the fog on your map.", ph: "Your email", btn: "Notify me", ok: "Thanks! We'll email you at launch.", bad: "Please enter a valid email address.", net: "Something went wrong. Please try again later.", many: "Too many attempts. Please try again later.", note: "One email at launch. No spam.", priv: "Privacy"},
+  fr: {tag: "Révèle le monde en l'explorant.<br>Chaque pas efface le brouillard de ta carte.", ph: "Ton e-mail", btn: "Me prévenir", ok: "Merci ! On t'écrit au lancement.", bad: "Entre une adresse e-mail valide.", net: "Une erreur est survenue. Réessaie plus tard.", many: "Trop de tentatives. Réessaie plus tard.", note: "Un seul e-mail au lancement. Pas de spam.", priv: "Confidentialité"}
+};
+var lang = (navigator.language || "en").toLowerCase().indexOf("fr") === 0 ? "fr" : "en";
+var t = T[lang];
+document.documentElement.lang = lang;
+document.getElementById("tagline").innerHTML = t.tag;
+document.getElementById("email").placeholder = t.ph;
+document.getElementById("btn").textContent = t.btn;
+document.getElementById("note").textContent = t.note;
+document.getElementById("priv").textContent = t.priv;
+// Logo : si logo.png existe à côté de cette page, il remplace le mot « Sillage ».
+var img = document.getElementById("logo");
+img.onload = function () { img.hidden = false; document.getElementById("word").hidden = true; };
+img.onerror = function () { img.remove(); };
+if (img.complete && img.naturalWidth) img.onload();
+
+var f = document.getElementById("f"), msg = document.getElementById("msg"), btn = document.getElementById("btn");
+function say(text, cls) { msg.textContent = text; msg.className = "msg " + cls; }
+f.addEventListener("submit", function (e) {
+  e.preventDefault();
+  var email = document.getElementById("email").value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return say(t.bad, "bad");
+  btn.disabled = true; say("", "");
+  fetch(ENDPOINT, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({email: email, lang: lang, website: document.getElementById("website").value})
+  }).then(function (r) {
+    if (r.status === 429) return say(t.many, "bad");
+    if (r.status === 422) return say(t.bad, "bad");
+    if (!r.ok) throw new Error("http " + r.status);
+    say(t.ok, "ok"); f.reset();
+  }).catch(function () { say(t.net, "bad"); }).then(function () { btn.disabled = false; });
+});
+</script>
+</body>
+</html>
