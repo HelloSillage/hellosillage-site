@@ -29,57 +29,81 @@
             color: #2ecc71
         }
 
-        hr {
-            border: 0;
-            border-top: 1px solid #2a2a2a;
-            margin: 36px 0
+        [hidden] {
+            display: none !important
         }
     </style>
-<link rel="icon" href="favicon.ico" sizes="48x48">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" href="favicon.ico" sizes="48x48">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
 </head>
 
 <body>
     <p><a href="./">← Sillage</a></p>
 
-    <h1>Français</h1>
-    <p>Cette page explique ce que devient ton adresse e-mail si tu t'inscris sur hellosillage.app.</p>
-    <h2>Ce que nous collectons</h2>
-    <p>Ton adresse e-mail, la plateforme que tu choisis (Android ou iPhone), la langue de ton navigateur (français ou
-        anglais) et la date d'inscription. Rien d'autre : aucun suivi publicitaire, aucun cookie.</p>
-    <h2>Pourquoi</h2>
-    <p>Uniquement pour te contacter à propos de la bêta et du lancement de l'application Sillage. Nous ne vendons ni ne
-        partageons ton adresse.</p>
-    <h2>Où et combien de temps</h2>
-    <p>Les adresses sont stockées chez Cloudflare, notre prestataire d'hébergement, dans une base séparée de
-        l'application. Cloudflare est une entreprise américaine : les données peuvent être traitées hors de l'Union
-        européenne, dans le cadre de ses engagements contractuels. Pour limiter les abus, une empreinte non réversible
-        de ton adresse IP est conservée une heure puis effacée. Les adresses e-mail sont supprimées au plus tard trois
-        mois après le lancement, ou plus tôt sur simple demande.</p>
-    <h2>Tes droits</h2>
-    <p>Tu peux demander l'accès, la rectification ou la suppression de ton adresse à tout moment en écrivant à <a
-            href="mailto:contact@hellosillage.app">contact@hellosillage.app</a>. Tu peux aussi saisir la CNIL (cnil.fr).
-    </p>
+    <section id="fr" lang="fr" hidden>
+        <h1>Confidentialité</h1>
+        <p>Cette page explique ce que devient ton adresse e-mail si tu t'inscris sur hellosillage.app.</p>
+        <h2>Ce que nous collectons</h2>
+        <p>Ton adresse e-mail, la plateforme que tu choisis (Android ou iPhone), la langue de ton navigateur (français
+            ou
+            anglais) et la date d'inscription. Rien d'autre : aucun suivi publicitaire, aucun cookie.</p>
+        <h2>Pourquoi</h2>
+        <p>Uniquement pour te contacter à propos de la bêta et du lancement de l'application Sillage. Nous ne vendons ni
+            ne
+            partageons ton adresse.</p>
+        <h2>Où et combien de temps</h2>
+        <p>Les adresses sont stockées chez Cloudflare, notre prestataire d'hébergement, dans une base séparée de
+            l'application. Cloudflare est une entreprise américaine : les données peuvent être traitées hors de l'Union
+            européenne, dans le cadre de ses engagements contractuels. Pour limiter les abus, une empreinte non
+            réversible
+            de ton adresse IP est conservée une heure puis effacée. Les adresses e-mail sont supprimées au plus tard
+            trois
+            mois après le lancement, ou plus tôt sur simple demande.</p>
+        <h2>Tes droits</h2>
+        <p>Tu peux demander l'accès, la rectification ou la suppression de ton adresse à tout moment en écrivant à <a
+                href="mailto:contact@hellosillage.app">contact@hellosillage.app</a>. Tu peux aussi saisir la CNIL
+            (cnil.fr).
+        </p>
+    </section>
 
-    <hr>
+    <section id="en" lang="en" hidden>
+        <h1>Privacy</h1>
+        <p>This page explains what happens to your email address if you sign up on hellosillage.app.</p>
+        <h2>What we collect</h2>
+        <p>Your email address, the platform you choose (Android or iPhone), your browser language (French or English)
+            and
+            the sign-up date. Nothing else: no advertising trackers, no cookies.</p>
+        <h2>Why</h2>
+        <p>Only to contact you about the beta and the launch of the Sillage app. We never sell or share your address.
+        </p>
+        <h2>Where and for how long</h2>
+        <p>Addresses are stored with Cloudflare, our hosting provider, in a database separate from the app. Cloudflare
+            is a
+            US company, so data may be processed outside the European Union under its contractual safeguards. To limit
+            abuse, a non-reversible fingerprint of your IP address is kept for one hour and then erased. Email addresses
+            are
+            deleted at the latest three months after launch, or sooner on request.</p>
+        <h2>Your rights</h2>
+        <p>You can ask to access, correct or delete your address at any time by writing to <a
+                href="mailto:contact@hellosillage.app">contact@hellosillage.app</a>. You may also contact your data
+            protection authority.</p>
+    </section>
 
-    <h1>English</h1>
-    <p>This page explains what happens to your email address if you sign up on hellosillage.app.</p>
-    <h2>What we collect</h2>
-    <p>Your email address, the platform you choose (Android or iPhone), your browser language (French or English) and
-        the sign-up date. Nothing else: no advertising trackers, no cookies.</p>
-    <h2>Why</h2>
-    <p>Only to contact you about the beta and the launch of the Sillage app. We never sell or share your address.</p>
-    <h2>Where and for how long</h2>
-    <p>Addresses are stored with Cloudflare, our hosting provider, in a database separate from the app. Cloudflare is a
-        US company, so data may be processed outside the European Union under its contractual safeguards. To limit
-        abuse, a non-reversible fingerprint of your IP address is kept for one hour and then erased. Email addresses are
-        deleted at the latest three months after launch, or sooner on request.</p>
-    <h2>Your rights</h2>
-    <p>You can ask to access, correct or delete your address at any time by writing to <a
-            href="mailto:contact@hellosillage.app">contact@hellosillage.app</a>. You may also contact your data
-        protection authority.</p>
+    <script>
+        // Même détection de langue que la page d'accueil : français si le navigateur est en français, anglais sinon.
+        var lang = (navigator.language || "en").toLowerCase().indexOf("fr") === 0 ? "fr" : "en";
+        document.documentElement.lang = lang;
+        document.getElementById(lang).hidden = false;
+        document.title = lang === "fr" ? "Sillage – Confidentialité" : "Sillage – Privacy";
+    </script>
+    <noscript>
+        <style>
+            section[hidden] {
+                display: block !important
+            }
+        </style>
+    </noscript>
 </body>
 
 </html>
